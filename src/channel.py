@@ -15,9 +15,37 @@ class Channel:
         self.title = self.__info_to_print["items"][0]["snippet"]["title"]
         self.description = self.__info_to_print["items"][0]["snippet"]["description"]
         self.url = f"https://www.youtube.com/{self.__info_to_print['items'][0]['snippet']['customUrl']}"
-        self.subscriber_count = self.__info_to_print["items"][0]["statistics"]["subscriberCount"]
+        self.subscriber_count = int(self.__info_to_print["items"][0]["statistics"]["subscriberCount"])
         self.video_count = self.__info_to_print["items"][0]["statistics"]["videoCount"]
         self.view_count = self.__info_to_print["items"][0]["statistics"]["viewCount"]
+
+    def __str__(self):
+        """Возвращает название и ссылку на канал по шаблону"""
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """Возвращает сумму подписчиков двух объектов"""
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Возвращает разность подписчиков двух объектов"""
+        return self.subscriber_count - other.subscriber_count
+
+    def __eq__(self, other):
+        """Для равенства =="""
+        return self.subscriber_count == other.subscriber_count
+
+    def __ne__(self, other):
+        """Для неравенства !="""
+        return self.subscriber_count != other.subscriber_count
+
+    def __lt__(self, other):
+        """Для оператора меньше <"""
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        """Для оператора меньше или равно <="""
+        return self.subscriber_count <= other.subscriber_count
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
