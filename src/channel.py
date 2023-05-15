@@ -14,10 +14,10 @@ class Channel:
         self.__info_to_print = youtube_channels_list.execute()
         self.title = self.__info_to_print["items"][0]["snippet"]["title"]
         self.description = self.__info_to_print["items"][0]["snippet"]["description"]
-        self.customUrl = f"https://www.youtube.com/{self.__info_to_print['items'][0]['snippet']['customUrl']}"
-        self.subscriberCount = self.__info_to_print["items"][0]["statistics"]["subscriberCount"]
-        self.videoCount = self.__info_to_print["items"][0]["statistics"]["videoCount"]
-        self.viewCount = self.__info_to_print["items"][0]["statistics"]["viewCount"]
+        self.url = f"https://www.youtube.com/{self.__info_to_print['items'][0]['snippet']['customUrl']}"
+        self.subscriber_count = self.__info_to_print["items"][0]["statistics"]["subscriberCount"]
+        self.video_count = self.__info_to_print["items"][0]["statistics"]["videoCount"]
+        self.view_count = self.__info_to_print["items"][0]["statistics"]["viewCount"]
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -25,12 +25,27 @@ class Channel:
 
     @classmethod
     def get_service(cls):
+        """Возвращает объект для работы с YouTube API"""
         api_key: str = os.getenv('YT_API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
 
+    def to_json(self, filename):
+        """Сохраняет значения атрибутов экземпляра Channel в файл в формате JSON."""
+        channel = {
+            'channel_id': self.channel_id,
+            'title': self.title,
+            'description': self.description,
+            'customUrl': self.url,
+            'subscriberCount': self.subscriber_count,
+            'videoCount': self.video_count,
+            'viewCount': self.view_count
+        }
+        with open(filename, "w", encoding="UTF-8") as file:
+            json.dump(channel, file, ensure_ascii=False)
+
     # @classmethod
-    # def instantiate_from_csv(cls, channel_id) -> None:
+    # def instantiate_from_channel_id(cls, channel_id) -> None:
     #     """Возвращает объект для работы с YouTube API"""
     #     info_to_print = cls.__youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
     #     title = info_to_print["items"][0]["snippet"]["title"]
@@ -41,7 +56,3 @@ class Channel:
     #     viewCount = info_to_print["items"][0]["statistics"]["viewCount"]
     #     channel = cls(channel_id, title, description, customUrl, subscriberCount, videoCount, viewCount)
     #     return channel
-
-
-vdud = Channel("UCMCgOm8GZkHp8zJ6l7_hIuA")
-print(vdud.print_info())
