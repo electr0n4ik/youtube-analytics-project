@@ -19,6 +19,10 @@ class Channel:
         self.video_count = self.__info_to_print["items"][0]["statistics"]["videoCount"]
         self.view_count = self.__info_to_print["items"][0]["statistics"]["viewCount"]
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
     def __str__(self):
         """Возвращает название и ссылку на канал по шаблону"""
         return f"{self.title} ({self.url})"
