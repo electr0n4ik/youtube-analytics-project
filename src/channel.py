@@ -15,9 +15,9 @@ class Channel:
         self.title = self.__info_to_print["items"][0]["snippet"]["title"]
         self.description = self.__info_to_print["items"][0]["snippet"]["description"]
         self.url = f"https://www.youtube.com/{self.__info_to_print['items'][0]['snippet']['customUrl']}"
-        self.subscriber_count = int(self.__info_to_print["items"][0]["statistics"]["subscriberCount"])
-        self.video_count = self.__info_to_print["items"][0]["statistics"]["videoCount"]
-        self.view_count = self.__info_to_print["items"][0]["statistics"]["viewCount"]
+        self.subscriber_count: int = int(self.__info_to_print["items"][0]["statistics"]["subscriberCount"])
+        self.video_count: int = self.__info_to_print["items"][0]["statistics"]["videoCount"]
+        self.view_count: int = self.__info_to_print["items"][0]["statistics"]["viewCount"]
 
     @property
     def channel_id(self):
